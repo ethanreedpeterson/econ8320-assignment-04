@@ -1,4 +1,17 @@
-import builtins
+
+#si-matrix
+
+""" 
+
+This class is intended to create a way to store the values and shape of a 
+matrix. The matrix can be imported as a list (matrix with single column, 
+or vector), or as a list of lists (2-dimensional matrices) via the value argument. 
+The class includes
+an __init__ function to read in the matrix, or create a matrix of 1's of a 
+specific dimensionality. The class also includes a __repr__ function to 
+designate the method for printing the matrix to screen.
+
+"""
 
 class Matrix(object):
     """ 
@@ -6,35 +19,36 @@ class Matrix(object):
     """
     def __init__(self, value = [], dim=(1,1)):            
         if isinstance(value, list):
-            if builtins.len(value)>0:
-                if isinstance(value[0], (int, float)):
+            if len(value)>0:
+                if type(value[0]) is int or type(value[0]) is float:
                     row = (int, float)
                 else:
                     row = type(value[0])
                 for i in value:
-                    if not isinstance(i, (int, float, list)):
+                    if type(i) is not int or type(i) is not float or type(i) is not list:
                         raise RuntimeError("Matrix is invalid. Please ensure that all elements share a type.")
                 if row is list:
-                    lenInner = builtins.len(value[0])
+                    lenInner = len(value[0])
                     for i in value:
-                        if builtins.len(i) != lenInner:
+                        if len(i) is not lenInner:
                             raise RuntimeError("Matrix is invalid. Please ensure that all rows have uniform length.")
                         for j in i:
-                            if not isinstance(j, (int, float)):
+                            if type(j) is not int and type(j) is not float:
                                 raise RuntimeError("Matrix is invalid. Please ensure that all elements are numeric (either float or int).")
                 self.value = value
                 try:
-                    self.shape = (builtins.len(value), builtins.len(value[0]))
+                    self.shape = (len(value), len(value[0]))
                 except Exception:
-                    self.shape = (builtins.len(value), 1)
+                    self.shape = (len(value), 1)
             else:
-                matrix = [[1 for _ in range(dim[1])] for _ in range(dim[0])]
+                matrix = []
+                for i in range(dim[0]):
+                        row = []
+                        for j in range(dim[1]):
+                            row.append(1)
+                        matrix.append(row)
                 self.value = matrix
                 self.shape = dim
-        else:
-            matrix = [[1 for _ in range(dim[1])] for _ in range(dim[0])]
-            self.value = matrix
-            self.shape = dim
     """
     Print the matrix to screen
     """           
