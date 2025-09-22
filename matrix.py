@@ -1,46 +1,40 @@
 import builtins
-_blen = builtins.len
 
 class Matrix(object):
     """ 
     Read the matrix and store as part of the class object
     """
-    def __init__(self, value = None, dim=(1,1)):
-        if value is None:
-            value = []
-            
+    def __init__(self, value = [], dim=(1,1)):            
         if isinstance(value, list):
-            if _blen(value)>0:
-                if isinstance(value[0], int, float):
+            if builtins.len(value)>0:
+                if isinstance(value[0], (int, float)):
                     row = (int, float)
                 else:
                     row = type(value[0])
                 for i in value:
-                    if not isinstance(i, (value[0], int, float)):
+                    if not isinstance(i, (int, float, list)):
                         raise RuntimeError("Matrix is invalid. Please ensure that all elements share a type.")
                 if row is list:
-                    lenInner = _blen(value[0])
+                    lenInner = builtins.len(value[0])
                     for i in value:
-                        if _blen(i) != lenInner:
+                        if builtins.len(i) != lenInner:
                             raise RuntimeError("Matrix is invalid. Please ensure that all rows have uniform length.")
                         for j in i:
                             if not isinstance(j, (int, float)):
                                 raise RuntimeError("Matrix is invalid. Please ensure that all elements are numeric (either float or int).")
                 self.value = value
                 try:
-                    self.shape = (_blen(value), _blen(value[0]))
-                except:
-                    self.shape = (_blen(value), 1)
+                    self.shape = (builtins.len(value), builtins.len(value[0]))
+                except Exception:
+                    self.shape = (builtins.len(value), 1)
             else:
-                matrix = []
-                for i in range(dim[0]):
-                        row = []
-                        for j in range(dim[1]):
-                            row.append(1)
-                        matrix.append(row)
+                matrix = [[1 for _ in range(dim[1])] for _ in range(dim[0])]
                 self.value = matrix
                 self.shape = dim
-    
+        else:
+            matrix = [[1 for _ in range(dim[1])] for _ in range(dim[0])]
+            self.value = matrix
+            self.shape = dim
     """
     Print the matrix to screen
     """           
