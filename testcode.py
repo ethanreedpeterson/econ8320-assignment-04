@@ -1,5 +1,5 @@
 class Matrix(object):
-    """ 
+    """
     Read the matrix and store as part of the class object
     """
     def __init__(self, value = [], dim=(1,1)):            
@@ -10,7 +10,7 @@ class Matrix(object):
                 else:
                     row = type(value[0])
                 for i in value:
-                    if type(i) is not int or type(i) is not float and type(i) is not list:
+                    if type(i) is not int and type(i) is not float and type(i) is not list:
                         raise RuntimeError("Matrix is invalid. Please ensure that all elements share a type.")
                 if row is list:
                     lenInner = len(value[0])
@@ -62,3 +62,14 @@ class Matrix(object):
         if self.shape[1]>1:
             string += "]\n\n"
         return string
+
+
+result = '  [ 4 6 1 9 10 12 1 7 ]\n  [ 1 2 3 4 5 6 7 8 ]\n  [ 19 0 3 1 10 15 -1 -1 ]\n\n'
+
+matrixList = [[4,6,1,9,10,12,1,7],
+        [1,2,3,4,5,6,7,8],
+        [19,0,3,1,10,15,-1,-1]]
+
+mat2 = Matrix(matrixList)
+
+print(str(mat2)==result)
